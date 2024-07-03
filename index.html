@@ -1,0 +1,153 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quoter</title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
+    </style>
+
+
+    <style>
+
+        body{
+            overflow: hidden;
+        }
+
+        #bg_grid{
+
+            /* Grid BG com CSS */
+            /* REF ->  https://stackoverflow.com/questions/3540194/how-to-make-a-grid-like-graph-paper-grid-with-just-css */
+
+            --grid-size: 30px;
+            --grid-strength: 1px;
+            --grid-dash: 5px;
+            --grid-gap: 10px;
+            --grid-color: #ddd;
+            --paper-color: #fff;
+    
+            /* styling */
+            background-color: var(--paper-color);
+            background-size: var(--grid-gap) var(--grid-gap), var(--grid-size) var(--grid-size);
+            background-image:
+                linear-gradient(to bottom, transparent var(--grid-dash), var(--paper-color) var(--grid-dash)), 
+                linear-gradient(to right, var(--grid-color) var(--grid-strength), transparent var(--grid-strength)),
+                linear-gradient(to right, transparent var(--grid-dash), var(--paper-color) var(--grid-dash)),
+                linear-gradient(to bottom, var(--grid-color) var(--grid-strength), transparent var(--grid-strength));
+              
+            opacity: 80%;
+
+            width: 100vw;
+            height: 100vh;
+            position: absolute;
+            z-index: -3;
+            margin-top: -64vh;
+
+
+            /* * * * * */
+
+        }
+
+        h1, p{
+            color: #3b3b3b;
+            /* color: #f3f3f3; */
+
+            font-family: 'Poppins', sans-serif;
+            text-shadow: 0 0 2px #707070;
+        }
+
+        h1{
+            font-size: 1.5rem;
+        }
+        p{
+            font-size: 2.5rem;
+        }
+
+        #text_container{
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            /* background-color: aliceblue; */
+            width: 80vw;
+            margin-left: 9vw;
+            margin-top: 30vh
+
+        }
+
+        #img_container{
+            width: 30vw;
+            height: 70vh;
+            /* background-color: bisque; */
+            position: absolute;
+            right: 0;
+            margin-top: -30vh;
+            z-index: -1;
+            
+        }
+
+        #img_container img{
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 20px 0px 0px 20px;
+            box-shadow: 1px 1px 2px 1px #0000003d
+        }
+
+        #bg_color{
+            width: 70vw;
+            height: 40vh;
+            position: relative;
+            z-index: -2;
+            margin-top: -35vh;
+            margin-left: 5vw;
+            border-radius: 20px;
+            /* background-color: aquamarine; */
+            box-shadow: 1px 1px 2px 1px #0000003d
+        }
+        
+    </style>
+
+    <script src="https://unpkg.com/fast-average-color/dist/index.browser.min.js" defer></script>
+    <script>
+        window.addEventListener('load', function() {
+            const fac = new FastAverageColor();
+            const container = document.querySelector('#bg_color');
+            const color = fac.getColor(document.querySelector('#img_container img'));
+
+            container.style.backgroundColor = color.rgba;
+            document.querySelector('#text_container p').style.color = color.isDark ? '#f3f3f3' : '#3b3b3b';
+            document.querySelector('#text_container h1').style.color = color.isDark ? '#f3f3f3' : '#3b3b3b';
+
+            console.log(color);
+            // {
+            //     error: null,
+            //     rgb: 'rgb(255, 0, 0)',
+            //     rgba: 'rgba(255, 0, 0, 1)',
+            //     hex: '#ff0000',
+            //     hexa: '#ff0000ff',
+            //     value: [255, 0, 0, 255],
+            //     isDark: true,
+            //     isLight: false
+            // }
+        }, false);
+    </script>
+
+</head>
+<body>
+    
+    <div id="text_container">
+        <p>{{quote}}</p>
+        <h1>{{author}}</h1> 
+    </div>
+
+    <div id="img_container">
+            <!-- <img src='https://source.unsplash.com/random/?nature' crossorigin="anonymous"> Depreciado, use a API abaixo por enquanto  --> 
+        <img src='https://picsum.photos/400' crossorigin="anonymous">
+    </div>
+
+    <div id="bg_color"></div>
+    <div id="bg_grid"></div>
+</body>
+</html>
